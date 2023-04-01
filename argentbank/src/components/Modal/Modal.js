@@ -7,6 +7,7 @@ import { setCredentials } from "../../features/auth/authSlice";
 //import { useGetInfosMutation} from "../../features/userInfo/userInfoApiSlice"
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useGetInfosMutation } from "../../features/userInfo/userInfoApiSlice";
 
 function Modal({ open, text, onClose }) {
   //const [getInfos , {isSuccess}] = useGetInfosMutation()
@@ -17,6 +18,7 @@ function Modal({ open, text, onClose }) {
   const dispatch = useDispatch();
   let accessToken = useSelector(selectCurrentToken);
   let email = useSelector(selectCurrentUser);
+    const [getInfos, { isLoading }] = useGetInfosMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +34,9 @@ function Modal({ open, text, onClose }) {
       // eslint-disable-next-line no-use-before-define, no-unused-expressions
 
       dispatch(setCredentials({ email, accessToken, firstname, lastname }));
+         await getInfos({ firstName, lastName}).then(
+        (data) => console.log(data)
+      );
     } catch (err) {
       if (!err?.originalStatus) {
       }
