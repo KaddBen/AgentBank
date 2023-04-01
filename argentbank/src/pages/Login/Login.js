@@ -34,16 +34,21 @@ const Login = () => {
 
     try {
       const data = await login({ email, password }).then(
-        (data) => Object.values(data)[0]
+        (data) => data.data.body
       );
-//
-      const accessToken = Object.values(Object.values(data)[2])[0];
-      const firstname = Object.values(
+//    
+
+      //const accessToken = Object.values(Object.values(data)[2])[0];
+      const accessToken = data.token
+      console.log(accessToken, data.user.password)
+  /*    const firstname = Object.values(
         Object.values(Object.values(data)[2])[1]
       )[3];
       const lastname = Object.values(
         Object.values(Object.values(data)[2])[1]
-      )[4];
+      )[4]; */
+      const firstname = data.user.firstName
+      const lastname = data.user.lastName
       console.log(data);
 //
       dispatch(setCredentials({ accessToken, email, firstname, lastname }));
