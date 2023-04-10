@@ -11,9 +11,10 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
   const navigate = useNavigate();
-  console.log({ password, email });
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
 
@@ -28,51 +29,73 @@ const Login = () => {
     containerDiv.style.flexDirection = "column";
     containerDiv.style.minHeight = "100vh";
   }, [email, password]);
+  const isValidEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
 
+  const setError = () => {
+    let errorCount = 0;
+    switch (email) {
+      case email.length < 3 && email.length > 0:
+        setEmailErr("Ce champ doit contenir au moins 3 caracteres");
+        errorCount++;
+        break;
+      case email.length === 0:
+        setEmailErr("Ce champ ne peut etre vide");
+        errorCount++;
+        break;
+      case !isValidEmail(email):
+        setEmailErr("Ce champ doit contenir un email valide");
+        errorCount++;
+        break;
+      case password.length === 0:
+        setPasswordErr("Ce champ ne peut etre vide");
+        errorCount++;
+        break;
+      default:
+        console.log(`Aucune erreur`);
+    }
+    return errorCount;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError();
+    if (setError !== 0) {
+      //Retrieve access token
+      try {
+        const data = await login({ email, password }).then(
+          (data) => data.data.body
+        );
+      
+        const accessToken = data.token;
 
-    try {
-      const data = await login({ email, password }).then(
-        (data) => data.data.body
-      );
-//    
+        // Store the access token
+        dispatch(setCredentials({ accessToken }));
 
-      //const accessToken = Object.values(Object.values(data)[2])[0];
-      const accessToken = data.token
-      console.log(accessToken, data.user.password)
-  /*    const firstname = Object.values(
-        Object.values(Object.values(data)[2])[1]
-      )[3];
-      const lastname = Object.values(
-        Object.values(Object.values(data)[2])[1]
-      )[4]; */
-      const firstname = data.user.firstName
-      const lastname = data.user.lastName
-      console.log(data);
-//
-      dispatch(setCredentials({ accessToken, email, firstname, lastname }));
-//
-      setEmail("");
-      setPassword("");
-      navigate("/profile");
-      console.log(data);
-    } catch (err) {
-      errRef.current.focus();
+        setEmail("");
+        setPassword("");
+        navigate("/profile");
+      } catch (err) {
+        console.log(err);
+        errRef.current.focus();
+      }
     }
   };
+
   const handleUserInput = (e) => setEmail(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
   const content = isLoading ? (
     <h1>Loading...</h1>
   ) : (
-    <main class="main bg-dark">
-      <section class="sign-in-content">
+    <main className="main bg-dark">
+      <section className="sign-in-content">
         <FaUserCircle />
         <h1>Sign In</h1>
         <form>
-          <div class="input-wrapper">
-            <label for="username">Username</label>
+          <div className="input-wrapper">
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
@@ -82,9 +105,10 @@ const Login = () => {
               autoComplete="off"
               required
             />
+            <span>{emailErr}</span>
           </div>
-          <div class="input-wrapper">
-            <label for="password">Password</label>
+          <div className="input-wrapper">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -93,13 +117,14 @@ const Login = () => {
               autoComplete="on"
               required
             />
+            <span>{passwordErr}</span>
           </div>
-          <div class="input-remember">
+          <div className="input-remember">
             <input type="checkbox" id="remember-me" />
-            <label for="remember-me">Remember me</label>
+            <label htmlFor="remember-me">Remember me</label>
           </div>
 
-          <button class="sign-in-button" onClick={handleSubmit}>
+          <button className="sign-in-button" onClick={handleSubmit}>
             Sign In
           </button>
         </form>

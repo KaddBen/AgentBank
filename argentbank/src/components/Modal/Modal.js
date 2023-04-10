@@ -1,24 +1,19 @@
 import React, { useState } from "react";
-import { selectCurrentUser } from "../../features/auth/authSlice";
-import { selectCurrentToken } from "../../features/auth/authSlice";
-//import { selectCurrentAmount } from '../../features/userInfo/userInfoSlice';
-//import { setInfo } from '../../features/userInfo/userInfoSlice'
-import { setCredentials } from "../../features/auth/authSlice";
-//import { useGetInfosMutation} from "../../features/userInfo/userInfoApiSlice"
+import { getName } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { useGetInfosMutation } from "../../features/userInfo/userInfoApiSlice";
 
-function Modal({ open, text, onClose }) {
-  //const [getInfos , {isSuccess}] = useGetInfosMutation()
+function Modal({ open, text, onClose, state }) {
   const [inputValue, setInputValue] = useState("");
   const [inputValue1, setInputValue1] = useState("");
   const handleInputValue = (e) => setInputValue(e.target.value);
-  const handleInputValue1 = (e) => setInputValue1(e.target.value);
+  const handleInputValue1 = (e) => {
+    let close = () => onClose;
+    setInputValue1(e.target.value);
+    close();
+  };
   const dispatch = useDispatch();
-  let accessToken = useSelector(selectCurrentToken);
-  let email = useSelector(selectCurrentUser);
-    const [getInfos, { isLoading }] = useGetInfosMutation();
+  const [getInfos, { isLoading }] = useGetInfosMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,10 +28,8 @@ function Modal({ open, text, onClose }) {
 
       // eslint-disable-next-line no-use-before-define, no-unused-expressions
 
-      dispatch(setCredentials({ email, accessToken, firstname, lastname }));
-         await getInfos({ firstName, lastName}).then(
-        (data) => console.log(data)
-      );
+      dispatch(getName({ firstname, lastname }));
+      await getInfos({ firstName, lastName }).then((data) => console.log(data));
     } catch (err) {
       if (!err?.originalStatus) {
       }
@@ -63,9 +56,10 @@ function Modal({ open, text, onClose }) {
       <div className="input_container">
         <input
           type={"submit"}
-          onClick={handleSubmit}
+          onMouseDown={handleSubmit}
+          onMouseUp={onClose}
           className="input_submit"
-          value="Valider"
+          value="Validez"
         ></input>
         <button onClick={onClose} className="input_submit">
           Cancel

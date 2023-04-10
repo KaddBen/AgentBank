@@ -47,10 +47,7 @@ module.exports.getUserProfile = async serviceData => {
 module.exports.loginUser = async serviceData => {
   try {
     const user = await User.findOne({ email: serviceData.email })
-   // const firstname = await User.findOne({ firstname: serviceData.firstname })
-   // const lastname = await User.findOne({ lastname: serviceData.firstname })
-
-
+    
     if (!user) {
       throw new Error('User not found!')
     }
@@ -67,7 +64,7 @@ module.exports.loginUser = async serviceData => {
       { expiresIn: '1d' }
     )
     
-    return { token, user }
+    return { token }
   } catch (error) {
     console.error('Error in userService.js', error)
     throw new Error(error)

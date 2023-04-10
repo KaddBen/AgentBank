@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001
 // Connect to the database
 dbConnection()
 
-//
+// Necessary to avoid headers errors
 app.use(credentials);
 
 // Handle CORS issues

@@ -10,11 +10,11 @@ const UserProfile = () => {
   let currentUser = useSelector(selectCurrentFirstname)
   return ( 
   <div className='sign_out'>
-    <a class="main-nav-item" href="./user.html">
+    <a className="main-nav-item" href="./user.html">
     <FaUserCircle/>
      {currentUser}
     </a>
-    <a class="main-nav-item" href="./" onClick={logOut()}>
+    <a className="main-nav-item" href="./" onClick={() => logOut()}>
       <FaSignOutAlt/>
       Sign Out
     </a>
