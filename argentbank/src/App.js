@@ -7,8 +7,6 @@ import User from "./pages/User/User.js";
 import SharedLayout from "./pages/SharedLayout/SharedLayout.js";
 import Error from "./pages/Error/Error.js";
 import RequireAuth from "./features/auth/RequireAuth";
-import "./style/App.css";
-import "./pages/Home/Home.css";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 

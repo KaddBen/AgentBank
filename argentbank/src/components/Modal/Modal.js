@@ -1,62 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getName } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useGetInfosMutation } from "../../features/userInfo/userInfoApiSlice";
+import { handleLastName } from "./modalFunction/handleLastName";
+import { handleSubmit } from "./modalFunction/handleSubmit";
+import './Modal.css';
 
-function Modal({ open, text, onClose, state }) {
-  const [inputValue, setInputValue] = useState("");
-  const [inputValue1, setInputValue1] = useState("");
-  const handleInputValue = (e) => setInputValue(e.target.value);
-  const handleInputValue1 = (e) => {
-    let close = () => onClose;
-    setInputValue1(e.target.value);
-    close();
-  };
+function Modal({ open, text, onClose }) {
+  
+  const [inputName, setInputName] = useState("");
+  const [inputLastName, setInputLastName] = useState("");
+  const handleFirstName = (e) => setInputName(e.target.value);
   const dispatch = useDispatch();
   const [getInfos, { isLoading }] = useGetInfosMutation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      let lastName = inputValue1;
-      let firstName = inputValue;
 
-      // eslint-disable-next-line no-use-before-define, no-unused-expressions
-
-      let firstname = firstName;
-      let lastname = lastName;
-
-      // eslint-disable-next-line no-use-before-define, no-unused-expressions
-
-      dispatch(getName({ firstname, lastname }));
-      await getInfos({ firstName, lastName }).then((data) => console.log(data));
-    } catch (err) {
-      if (!err?.originalStatus) {
-      }
-    }
-  };
-  if (!open) return null;
+    if (!open) return null;
   return (
     <div className="modal">
       <span>{text}</span>
       <div className="input_container">
         <input
           type={"text"}
-          value={inputValue}
-          onChange={handleInputValue}
+          value={inputName}
+          onChange={handleFirstName}
           className="input_text"
         ></input>
         <input
           type={"text"}
-          value={inputValue1}
-          onChange={handleInputValue1}
+          value={inputLastName}
+          onChange={(e) => handleLastName(
+          e,
+          onClose,
+          setInputLastName
+          )}
           className="input_text"
         ></input>
       </div>
       <div className="input_container">
         <input
           type={"submit"}
-          onMouseDown={handleSubmit}
+          onMouseDown={(e) => handleSubmit(
+            e,
+            inputLastName,
+            inputName,
+            dispatch,
+            getName,
+            getInfos
+          )}
           onMouseUp={onClose}
           className="input_submit"
           value="Validez"

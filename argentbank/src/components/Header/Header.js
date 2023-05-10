@@ -5,11 +5,10 @@ import { FaUserCircle } from "react-icons/fa";
 import UserProfile from "./userProfile/userProfile";
 const Header = () => {
   let profileLocation = window.location.href;
-
   const content =
     profileLocation !== "http://localhost:3000/profile" ? (
       <nav className="main-nav">
-        <a className="main-nav-logo" href="/index.html">
+        <a className="main-nav-logo" href="/">
           <img
             className="main-nav-logo-image"
             src={logo}

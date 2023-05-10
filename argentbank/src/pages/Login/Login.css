@@ -8,33 +8,45 @@ html {
 }
 body {
   min-height: 100vh;
+  margin:unset;
 }
-.root:nth-child(1) {
+body div div:nth-of-type(1):not(nav div, main div) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+input:focus {
+  outline: none;
+}
+.bg-dark {
+  padding-top: 3rem;
+  background-color: #12002b;
+}
+.bg-light {
+  padding-top: 3rem;
+  background-color: rgb(218, 217, 217);
+}
+.div_container {
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   min-height: 100vh !important;
 }
-input:focus {
-  outline: none;
+.feature-icon {
+  width: 100px;
+  border: 10px solid #00bc77;
+  border-radius: 50%;
+  padding: 1rem;
 }
-.modal {
-  position: fixed;
-  top: 200px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(218, 217, 217);
-  padding: 0px 50px;
-  z-index: 1000;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
+.feature-item {
+  flex: 1;
+  padding: 2.5rem;
 }
-.modal span {
-  font-size: 2rem;
-  color: black;
+.feature-item-title {
+  color: #222;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 .hidden {
   display: none;
@@ -45,12 +57,11 @@ input:focus {
   gap: 1rem;
   justify-content: center;
 }
-.input_text {
-  height: 35px;
-  width: 220px;
-  border: 2px solid grey;
-  color: grey;
-  border-radius: 4px;
+.input-remember {
+  display: flex;
+}
+.input-remember label {
+  margin-left: 0.25rem;
 }
 .input_submit {
   height: 41px;
@@ -63,57 +74,36 @@ input:focus {
 .input_submit:hover {
   cursor: pointer;
 }
+.input_text {
+  height: 35px;
+  width: 220px;
+  border: 2px solid grey;
+  color: grey;
+  border-radius: 4px;
+}
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+.input-wrapper label {
+  font-weight: bold;
+}
+.input-wrapper input {
+  padding: 5px;
+  font-size: 1.2rem;
+}
 .input-wrapper span {
   color: rgb(179, 22, 22);
   font-size: 12px;
 }
-
 .input-wrapper:invalid ~ span {
   display: block;
 }
-.div_container {
-  margin: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  min-height: 100vh !important;
-}
-@media (min-width: 920px) {
-  .features {
-    flex-direction: row;
-  }
-}
-
 .main {
   flex: 1;
 }
-.bg-dark {
-  padding-top: 3rem;
-  background-color: #12002b;
-}
-.bg-light {
-  padding-top: 3rem;
-  background-color: rgb(218, 217, 217);
-}
-
-.feature-icon {
-  width: 100px;
-  border: 10px solid #00bc77;
-  border-radius: 50%;
-  padding: 1rem;
-}
-
-.feature-item {
-  flex: 1;
-  padding: 2.5rem;
-}
-
-.feature-item-title {
-  color: #222;
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
 .sign-in-button {
   display: block;
   width: 100%;
@@ -125,7 +115,6 @@ input:focus {
   background-color: #00bc77;
   color: #fff;
 }
-
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
@@ -133,31 +122,11 @@ input:focus {
   margin: 0 auto;
   padding: 2rem;
 }
-
 .sign-in-icon {
   font-size: 5rem;
 }
-
-.input-remember {
-  display: flex;
-}
-
-.input-remember label {
-  margin-left: 0.25rem;
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin-bottom: 1rem;
-}
-
-.input-wrapper label {
-  font-weight: bold;
-}
-
-.input-wrapper input {
-  padding: 5px;
-  font-size: 1.2rem;
+@media (min-width: 920px) {
+  .features {
+    flex-direction: row;
+  }
 }

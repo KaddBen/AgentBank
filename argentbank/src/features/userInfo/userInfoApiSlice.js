@@ -12,6 +12,4 @@ export const userInfoApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetInfosMutation
-} = userInfoApiSlice
+export const { useGetInfosMutation } = userInfoApiSlice;
