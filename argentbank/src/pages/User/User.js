@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { userProfile } from "./UserFunction/userProfile";
 import Welcome from "../../components/Welcome/Welcome";
 import Account from "../../components/Account/Account";
-import "./User.css";
 
 function User() {
   const dispatch = useDispatch();

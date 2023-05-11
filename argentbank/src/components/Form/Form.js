@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //import { setCredentials } from "../../features/auth/authSlice";
 import { handleSubmit } from "../../pages/Login/LoginFunctions/handleSubmit";
-import { setError } from "../../pages/Login/LoginFunctions/setError"
+import { setError } from "../../pages/Login/LoginFunctions/setError";
+import "./Form.css"
 
 
 
