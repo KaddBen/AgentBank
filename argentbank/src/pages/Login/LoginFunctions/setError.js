@@ -1,26 +1,35 @@
-import { isValidEmail } from "./regex"
+import { set } from "mongoose";
+import { isValidEmail } from "./regex";
+import { useRef, useState, useEffect } from "react";
+
 export const setError = (email, setEmailErr, password, setPasswordErr) => {
-   
-    let errorCount = 0;
-    switch (email) {
-      case email.length < 3 && email.length > 0:
-        setEmailErr("Ce champ doit contenir au moins 3 caracteres");
-        errorCount++;
-        break;
-      case email.length === 0:
-        setEmailErr("Ce champ ne peut etre vide");
-        errorCount++;
-        break;
-      case !isValidEmail(email):
-        setEmailErr("Ce champ doit contenir un email valide");
-        errorCount++;
-        break;
-      case password.length === 0:
-        setPasswordErr("Ce champ ne peut etre vide");
-        errorCount++;
-        break;
-      default:
-        console.log(`Aucune erreur`);
-    }
-    return errorCount;
-  };
+  let errorCount = 0;
+
+  if (email.length < 3 && email.length > 0) {
+    errorCount++;
+    (errorCount > 0) ? setEmailErr("Ce champ doit contenir au moins 3 caracteres"): setEmailErr("");
+  }
+
+  if (email.length === 0) {
+    errorCount++;
+   (errorCount > 0) ? setEmailErr("Ce champ ne peut etre vide") : setEmailErr("");
+  }
+
+  if (!isValidEmail(email)) {
+    errorCount++;
+    (errorCount > 0) ? setEmailErr("Ce champ doit contenir un email valide"): setEmailErr("");
+  }
+
+  if (password.length === 0) {
+    errorCount++;
+    (errorCount > 0) ? setPasswordErr("Ce champ ne peut etre vide") : setPasswordErr("");
+  }
+  console.log(errorCount);
+ 
+  if (errorCount === 0) {
+  setEmailErr("");
+  setPasswordErr("");
+ };
+
+   return errorCount;
+};

@@ -20,15 +20,15 @@ const [passwordErr, setPasswordErr] = useState("");
 const navigate = useNavigate();
 
 const dispatch = useDispatch();
-let Error = setError(email, setEmailErr, password, setPasswordErr);
 
 
+//let Error = setError(email, setEmailErr, password, setPasswordErr);
 const handleUserInput = (e) => setEmail(e.target.value);
 const handlePwdInput = (e) => setPassword(e.target.value);
 
 useEffect(() => {
   userRef.current.focus();
-}, []);
+ }, []);
   return (
     <form>
     <div className="input-wrapper">
@@ -69,11 +69,14 @@ useEffect(() => {
         password,
         setEmail,
         setPassword,
+        setEmailErr,
+        setPasswordErr,
         navigate,
-        errRef,
+        userRef,
         login,
         dispatch,
-        Error
+        passwordErr,
+        emailErr
       )}
     >
       Sign In
