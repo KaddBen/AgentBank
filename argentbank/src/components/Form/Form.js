@@ -18,7 +18,6 @@ const [emailErr, setEmailErr] = useState("");
 const [password, setPassword] = useState("");
 const [passwordErr, setPasswordErr] = useState("");
 const navigate = useNavigate();
-
 const dispatch = useDispatch();
 
 

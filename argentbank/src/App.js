@@ -9,10 +9,13 @@ import Error from "./pages/Error/Error.js";
 import RequireAuth from "./features/auth/RequireAuth";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
-
+import { PersistGate } from 'redux-persist/integration/react';  
+import { persistStore } from 'redux-persist';
 function App() {
+  let persistor = persistStore(store);
   return (
     <Provider store={store}>
+  <PersistGate persistor={persistor}>
       <BrowserRouter>
         <Routes>
           {/* Public routes */}
@@ -27,6 +30,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 }
